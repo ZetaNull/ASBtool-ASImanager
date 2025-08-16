@@ -8,7 +8,7 @@ There was also a bug in development where it wouldn't copy things into the save 
 
 ## Requirements
 This requires both the mod API and Python 3.13. I've only lightly tested this on windows on my own personal install of Spore, though I see no reason why it *shouldn't* work for anyone else?
-I would recommend not using this without being clear on where your spore files are.
+I would recommend not using this without being clear on where your spore files are and having a backup though.
 
 ## Setup Instructions
 0. PLEASE backup your Spore files before using this, just to be safe if something goes wrong.
