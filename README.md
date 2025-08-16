@@ -4,6 +4,8 @@ A baseline, functional, command line mod/save instance manager for Spore meant t
 ### !!USE THIS AT YOUR OWN RISK!!
 This could potentially screw up the game files if set up wrong, and it could break at any time. I only made this because there wasn't a better one.
 
+There was also a bug in development where it wouldn't copy things into the save directory properly, sometimes not deleting files either, which I have attempted to fix by placing the scripts INSIDE of the save directory. Until further testing can be done I feel like there's a small chance it could resurface and cause it to potentially delete your mods. I dont know how to fix that if so, so make SURE you keep backups when using this.
+
 ## Requirements
 This requires both the mod API and Python 3.13. I've only lightly tested this on windows on my own personal install of Spore, though I see no reason why it *shouldn't* work for anyone else?
 I would recommend not using this without being clear on where your spore files are.
