@@ -30,7 +30,7 @@ a new backup using a cleaner instance. This will then be used as the base instan
 [INSTANCE MANAGER CHANGELOG:]
 0.1.2 - Instance Swap Rework
 - Reworked the way that Instances are swapped away from a copy/delete method to a proper move method
-- Significantly faster Instance swapping than 0.1.2
+- Significantly faster Instance swapping than 0.1.1
 - Incompatible with 0.1.1 instances without minor tweaks
 
 0.1.1 - Save Folder Rework
