@@ -1,6 +1,8 @@
 # Abysmal Spore Backup Tool and Instance Manager
 A baseline, functional, command line mod/save instance manager for Spore meant to be placed with the save data. Should work fine, though it's not thorougly tested. Meant to be used with the Mod API installed.
 
+<img width="128" height="128" alt="image" src="https://github.com/user-attachments/assets/45b37a26-2315-4f4a-88d8-9e8cc6472ac0" />
+
 ### !!EXPERIMENTAL, USE THIS AT YOUR OWN RISK!!
 This could potentially screw up the game files if set up wrong, and it could break at any time. I only made this because there wasn't a better one.
 
