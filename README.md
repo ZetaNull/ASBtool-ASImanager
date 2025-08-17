@@ -12,9 +12,10 @@ There was also a bug in development where it wouldn't copy things into the save 
 This requires both the mod API and Python 3.13. I've only lightly tested this on windows on my own personal install of Spore, though I see no reason why it *shouldn't* work for anyone else?
 I would recommend not using this without being clear on where your spore files are and having a backup though.
 
-## Setup Instructions
-0. PLEASE backup your Spore files before using this, just to be safe if something goes wrong.
-1. Place these files INSIDE of the Spore Save directory. (Directly inside, not in a subfolder.) Originally this was meant to be able to be extracted anywhere, but I was having bizzare issues getting that to work. This is usually in Appdata/Roaming on windows.
+## Setup Instructions 
+### (Windows)
+0. Backup your Spore files before using this, just to be safe if something goes wrong.
+1. Place the files in the zip INSIDE of the Spore Save directory. (Directly inside, not in a subfolder.) Originally the zip was meant to be able to be extracted anywhere, but I was having bizzare issues getting that to work. This is usually in Appdata/Roaming on windows.
 2. Run Setup.bat or Setup.py to generate .bat files for ASBtool.py and ASImanager.py ("`Run ASBtool.bat`" and "`Run Instance Manager.bat`" respectively)
 4. Generate a partial backup of your Spore files using `Run ASBtool.bat` (Example of which directories you need to use for this below, though it may not apply outside of the EA App.)
 5. Run `Run Instance Manager.bat` as administrator to run the Instance Manager. It does not work properly if you don't.
