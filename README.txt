@@ -26,3 +26,25 @@ EXTRA NOTES:
 a new backup using a cleaner instance. This will then be used as the base instance for any new instances unless you create a new backup.
 
 - I'm unsure how leaving save folders empty would impact an instance when you try and switch to it, so probably don't do this? Just make sure to run Spore after deleting anything. It /should/ be fine. I still recommend keeping a backup somewhere though on the off chance you forget or something goes wrong.
+
+[INSTANCE MANAGER CHANGELOG:]
+0.1.2 - Instance Swap Rework
+- Reworked the way that Instances are swapped away from a copy/delete method to a proper move method
+- Significantly faster Instance swapping than 0.1.2
+- Incompatible with 0.1.1 instances without minor tweaks
+
+0.1.1 - Save Folder Rework
+- Fixed the Instance Manager by reworking it to be placed INSIDE of the Spore save directory.
+- Added the Ability to delete instances
+
+0.1.0 - Initial Release (Private)
+- Made the thing, though working with the save folder did not function properly.
+- Frequently would just delete the save data
+
+[ASB TOOL CHANGELOG:]
+0.1.1 - Save Folder Rework
+- Rework to be placed inside of the Save Folder.
+
+0.1.0 - Initial Release (Private)
+- Initial iteration.
+- Worked fine, though the Instance Manager was bugged

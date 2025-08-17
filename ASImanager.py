@@ -29,7 +29,7 @@ def Main():
     print(cwd)
     # Welcome blurb
     print(color_blue + "------------------------------------------------------------------------")
-    print(color_green + "Welcome to the Abysmal Spore Instance Manager. \n(0.1.1) - Save Folder Rework\n"
+    print(color_green + "Welcome to the Abysmal Spore Instance Manager. \n(0.1.2) - Instance Swap Rework\n"
           + "Sorry this probably sucks, I don't have the budget for a GUI."
           + "\n\nPlease make sure to run as administrator to ensure files can be"
           + "\nmoved properly! This can be done by running Run Instance Manager.bat \n"
@@ -87,7 +87,7 @@ def Main():
                 print(color_blue+"\n------------------------------------------------------------------------")
                 print(color_green+"Welcome to the Abysmal Spore Instance Manager. Please read the\n"
                       + "README.txt file to make sure that you set everything up correctly.\n"
-                      + "(0.1.1) - Save Folder Rework\n"
+                      + "(0.1.2) - Instance Swap Rework\n"
                       + color_blue+"------------------------------------------------------------------------"
                       + color_active+"\n\n  This is a mod instance manager I created for Spore because I \n"
                       + "needed one and nobody seemed to have made one prior to this.\n\n"
@@ -174,9 +174,308 @@ def DelInstance():
         else:
             print(f"{command} isn't an instance!")
         
-
 # Script for switching between instances
 def SwitchInstance():
+    print(color_yellow + "!! MAKE SURE SPORE AND THE MOD API ARE CLOSED WHILE YOU DO THIS !!\n"
+        + color_green+ "Do you wish to switch your active instance? (y/n)")
+    command = input(color_default)
+    if command == "y" or command == "Y" or command == "yes" or command == "Yes":
+        activetxt = open("Instances/active.txt",'r')
+        active = activetxt.readline()
+        activetxt.close()
+        cont = "true"
+        # Get the instance to switch to
+        while (cont == "true"):
+            print(color_green+"Which instance would you like to switch to?")
+            command = input(color_default)
+            command = re.sub(r'[^a-zA-Z]', '', command)
+            if command == active:
+                print("This is your active instance.")
+                PrintInstances()
+            elif os.path.exists(cwd + "/Instances/" + command) and command != '':
+                cont = "false"
+            else:
+                print("Instance does not exist.")
+                PrintInstances()
+        # Set aside all of the spore directories to use later
+        dirs2 = open("directories.txt",'r')
+        msc = dirs2.readline()
+        msc = msc.rstrip()
+        sdata = dirs2.readline()
+        sdata = sdata.rstrip()
+        gadata = dirs2.readline()
+        gadata = gadata.rstrip()
+        modapi = dirs2.readline()
+        modapi = modapi.rstrip()
+        dirs2.close()
+
+        # Prompt user to ask if they want to back up their spore files.
+        print("Would you like to back up your Spore files before proceeding? (y/n)")
+        backupcheck = input()
+        if backupcheck == "y" or backupcheck == "Y" or backupcheck == "yes" or backupcheck == "Yes":
+            
+            # Reworked code from the backup tool lol
+            print(color_cyan+"\nCreating backup...\n")
+            WipeFolder(cwd + "/Instances/Instances.Backup")
+
+            # My Spore Creations
+            backupdir = cwd + "/Instances/Instances.Backup/My Spore Creations"
+            CopyFolder(msc,backupdir)
+
+            # Backup the Spore Data folder
+            backupdir = cwd + "/Instances/Instances.Backup/Data"
+            CopySData(sdata,backupdir)
+            
+            # Backup the GA Data folder
+            backupdir = cwd + "/Instances/Instances.Backup/DataEP1"
+            CopyGAData(gadata,backupdir)
+            
+            # Backup ModAPI data
+            backupdir = cwd + "/Instances/Instances.Backup/ModAPI"
+            CopyModAPI(modapi,backupdir)
+
+            # Backup Spore Save
+            shutil.copytree(cwd+"/CityMusic",cwd+"/Instances/Instances.Backup/Save/CityMusic")
+            shutil.copytree(cwd+"/Games",cwd+"/Instances/Instances.Backup/Save/Games")
+            shutil.copytree(cwd+"/Preferences",cwd+"/Instances/Instances.Backup/Save/Preferences")
+            # MVJCache and Temp don't seem nescessary.
+            shutil.copy2(cwd+"/EditorSaves.package",cwd+"/Instances/Instances.Backup/Save/EditorSaves.package")
+            shutil.copy2(cwd+"/Planets.package",cwd+"/Instances/Instances.Backup/Save/Planets.package")
+            shutil.copy2(cwd+"/Pollination.package",cwd+"/Instances/Instances.Backup/Save/Pollination.package")
+
+            print(color_cyan+"\nBackup Created.\n(Press enter to continue.)")
+            scrap = input()
+
+        # Move Spore Files to currently "Active" instance
+        print("Archiving active instance files...")
+        
+        # My Spore Creations
+        movedir = cwd + "/Instances/" + active + "/My Spore Creations"
+        MoveFolderContent(msc,movedir)
+        print("Archived My Spore Creations. (1/5)")
+
+        # Spore Data Folder
+        movedir = cwd + "/Instances/" + active + "/Data"
+        MoveSdataContent(sdata,movedir)
+        print("Archived Spore Data files. (2/5)")
+
+        # GA Data Folder
+        movedir = cwd + "/Instances/" + active + "/DataEP1"
+        MoveGAdataContent(gadata,movedir)
+        print("Archived GA Data files. (3/5)")
+
+        # ModAPI Files
+        movedir = cwd + "/Instances/" + active + "/ModAPI"
+        MoveModAPIContent(modapi,movedir)
+        print("Archived Mod API files. (4/5)")
+
+        # Spore Save Files
+        try:
+            os.mkdir(cwd+"/Instances/"+active)
+        except FileExistsError:
+            pass
+        try:
+            shutil.move(cwd+"/CityMusic",cwd+"/Instances/"+active+"/Save/CityMusic")
+        except FileNotFoundError:
+            pass
+        try:
+            shutil.move(cwd+"/Games",cwd+"/Instances/"+active+"/Save/Games")
+        except FileNotFoundError:
+            pass
+        try:
+            shutil.move(cwd+"/Preferences",cwd+"/Instances/"+active+"/Save/Preferences")
+        except FileNotFoundError:
+            pass
+        # MVJCache and Temp don't seem nescessary.
+        try:
+            shutil.move(cwd+"/EditorSaves.package",cwd+"/Instances/"+active+"/Save/EditorSaves.package")
+        except FileNotFoundError:
+            pass
+        try:
+            shutil.move(cwd+"/Planets.package",cwd+"/Instances/"+active+"/Save/Planets.package")
+        except FileNotFoundError:
+            pass
+        try:
+            shutil.move(cwd+"/Pollination.package",cwd+"/Instances/"+active+"/Save/Pollination.package")
+        except FileNotFoundError:
+            pass
+        print("Archived Spore Save files. (5/5)")
+        
+        # Move "activating" instance files to Spore directories
+        print(f"Unarchiving {command} Instance...")
+        
+        # My Spore Creations
+        movedir = cwd + "/Instances/" + command + "/My Spore Creations"
+        MoveFolderContent(movedir,msc)
+        print("Unarchived My Spore Creations. (1/5)")
+        
+        # Spore Data Folder
+        movedir = cwd + "/Instances/" + command + "/Data"
+        MoveSdataContent(movedir,sdata)
+        print("Unarchived Spore Data files. (2/5)")
+
+        # GA Data Folder
+        movedir = cwd + "/Instances/" + command + "/DataEP1"
+        MoveGAdataContent(movedir,gadata)
+        print("Unarchived GA Data files. (3/5)")
+
+        # ModAPI Files
+        movedir = cwd + "/Instances/" + command + "/ModAPI"
+        MoveModAPIContent(movedir,modapi)
+        print("Unarchived Mod API files. (4/5)")
+
+        # Spore Save Files
+        try:
+            shutil.move(cwd+"/Instances/"+command+"/Save/CityMusic",cwd+"/CityMusic")
+        except FileNotFoundError:
+            pass
+        try:
+            shutil.move(cwd+"/Instances/"+command+"/Save/Games",cwd+"/Games")
+        except FileNotFoundError:
+            pass
+        try:
+            shutil.move(cwd+"/Instances/"+command+"/Save/Preferences",cwd+"/Preferences")
+        except FileNotFoundError:
+            pass
+        # MVJCache and Temp don't seem nescessary.
+        try:
+            shutil.move(cwd+"/Instances/"+command+"/Save/EditorSaves.package",cwd+"/EditorSaves.package")
+        except FileNotFoundError:
+            pass
+        try:
+            shutil.move(cwd+"/Instances/"+command+"/Save/Planets.package",cwd+"/Planets.package")
+        except FileNotFoundError:
+            pass
+        try:
+            shutil.move(cwd+"/Instances/"+command+"/Save/Pollination.package",cwd+"/Pollination.package")
+        except FileNotFoundError:
+            pass
+        print("Unarchived Spore Save files. (5/5)")
+
+        # Finally, now that ALL OF THIS is done, switch the active directory file.
+        activetxt = open("Instances/active.txt", 'w')
+        activetxt.write(command)
+        activetxt.close
+        scrap = input(color_green+"Active Spore instance swapped, press enter to continue.\n"+color_default)
+
+# Instance Swapping Related Funcitons
+        
+# Script to move the full contents of a folder
+def MoveFolderContent(src,dst):
+    try:
+        os.mkdir(dst)
+    except FileExistsError:
+        pass
+    srcdir = os.listdir(src)
+    for i in srcdir:
+            # Move current file or folder.
+            print(f"Moving {i} from \n{src} to \n{dst}")
+            copysrc = src + '/' + i
+            copydst = dst + '/' + i
+            shutil.move(copysrc,copydst)
+
+# Script to move files in the Spore Data folder, ignores most vanilla files
+def MoveSdataContent(src,dst):
+    try:
+        os.mkdir(dst)
+    except FileExistsError:
+        pass
+    srcdir = os.listdir(src)
+    for i in srcdir:
+        if not(i == "Spore_Audio1.package"
+                or i == "Spore_Audio2.package"
+                or i == "Spore_Content.package"
+                or i == "Spore_Game.package"
+                or i == "Spore_Graphics.package"
+                or i == "Spore_Pack_03.package"
+                or i == "Locale"
+                or i == "version.txt"
+                or i == "properties.txt"
+                or i == "Config"):
+            # Move current file or folder.
+            print(f"Moving {i} from \n{src} to \n{dst}")
+            copysrc = src + '/' + i
+            copydst = dst + '/' + i
+            shutil.move(copysrc,copydst)
+        else:
+            # Print message when file or folder is skipped.
+            print(f"{i} Skipped")
+
+# Script to move files in the GA Data folder, ignores most vanilla files
+def MoveGAdataContent(src,dst):
+    try:
+        os.mkdir(dst)
+    except FileExistsError:
+        pass
+    srcdir = os.listdir(src)
+    for i in srcdir:
+        if not(i == "Spore_EP1_Locale_01.package"
+                or i == "Spore_EP1_Locale_02.package"
+                or i == "Spore_EP1_Content_01.package"
+                or i == "Spore_EP1_Content_02.package"
+                or i == "Spore_EP1_Data.package"
+                or i == "version.txt"
+                or i == "properties.txt"
+                or i == "Config"):
+            # Move current file or folder.
+            print(f"Moving {i} from \n{src} to \n{dst}")
+            copysrc = src + '/' + i
+            copydst = dst + '/' + i
+            shutil.move(copysrc,copydst)
+        else:
+            # Print message when file or folder is skipped.
+            print(f"{i} Skipped")
+
+# Script to move ModAPI files
+def MoveModAPIContent(source,dest):
+    try:
+        os.mkdir(dest)
+    except FileExistsError:
+        pass
+    # ModSettings Folder
+    d = dest + "/ModSettings"
+    s = source + "/ModSettings"
+    try:
+        os.mkdir(d)
+    except FileExistsError:
+        pass
+    shutil.move(s,d)
+    
+    # ModConfigs Folder
+    d = dest + "/ModConfigs"
+    s = source + "/ModConfigs"
+    try:
+        os.mkdir(d)
+    except FileExistsError:
+        pass
+    shutil.move(s,d)
+    
+    # mLibs Folder
+    d = dest + "/mLibs"
+    s = source + "/mLibs"
+    try:
+        os.mkdir(d)
+    except FileExistsError:
+        pass
+    srcdir = os.listdir(s)
+    for i in srcdir:
+        if not(i == "SporeModAPI.dll"
+               or i == "SporeModAPI.lib"):
+            # Move current file or folder.
+            copysrc = s + '/' + i
+            copydst = d + '/' + i
+            shutil.move(copysrc,copydst)
+        else:
+            pass
+    
+    # InstalledMods.config
+    d = dest + "/InstalledMods.config"
+    s = source + "/InstalledMods.config"
+    shutil.move(s,d)
+
+# Old Script for switching between instances. Unreferenced.
+# Used Copy/Delete a bunch instead of a move function.
+def SwitchInstanceOld():
     print(color_yellow + "!! MAKE SURE SPORE AND THE MOD API ARE CLOSED WHILE YOU DO THIS !!\n"
         + color_green+ "Do you wish to switch your active instance? (y/n)")
     command = input(color_default)
@@ -352,6 +651,8 @@ def SwitchInstance():
         activetxt.write(command)
         activetxt.close
         scrap = input(color_green+"Active Spore instance swapped, press enter to continue.\n"+color_default)
+
+# General functions, some of these are old and unused
 
 # Copy Spore Save
 def CopySav(src,sav):
