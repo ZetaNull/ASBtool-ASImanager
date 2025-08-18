@@ -29,7 +29,7 @@ def Main():
     print(cwd)
     # Welcome blurb
     print(color_blue + "------------------------------------------------------------------------")
-    print(color_green + "Welcome to the Abysmal Spore Instance Manager. \n(0.1.2_1) - Instance Swap Rework (Hotfix 1)\n"
+    print(color_green + "Welcome to the Abysmal Spore Instance Manager. \n(0.1.3) - GOG Update\n"
           + "Sorry this probably sucks, I don't have the budget for a GUI."
           + "\n\nPlease make sure to run as administrator to ensure files can be"
           + "\nmoved properly! This can be done by running Run Instance Manager.bat \n"
@@ -87,7 +87,7 @@ def Main():
                 print(color_blue+"\n------------------------------------------------------------------------")
                 print(color_green+"Welcome to the Abysmal Spore Instance Manager. Please read the\n"
                       + "README.txt file to make sure that you set everything up correctly.\n"
-                      + "(0.1.2_1) - Instance Swap Rework (Hotfix 1)\n"
+                      + "(0.1.3) - GOG Update\n"
                       + color_blue+"------------------------------------------------------------------------"
                       + color_active+"\n\n  This is a mod instance manager I created for Spore because I \n"
                       + "needed one and nobody seemed to have made one prior to this.\n\n"
@@ -391,7 +391,8 @@ def MoveSdataContent(src,dst):
                 or i == "Locale"
                 or i == "version.txt"
                 or i == "properties.txt"
-                or i == "Config"):
+                or i == "Config"
+                or i == "PatchData.package"):
             # Move current file or folder.
             print(f"Moving {i} from \n{src} to \n{dst}")
             copysrc = src + '/' + i
@@ -439,7 +440,8 @@ def MoveModAPIContent(source,dest):
         os.mkdir(d)
     except FileExistsError:
         pass
-    shutil.move(s,d)
+    if os.path.exists(s):
+        shutil.move(s,d)
     
     # ModConfigs Folder
     d = dest #+ "/ModConfigs"
@@ -448,7 +450,8 @@ def MoveModAPIContent(source,dest):
         os.mkdir(d)
     except FileExistsError:
         pass
-    shutil.move(s,d)
+    if os.path.exists(s):
+        shutil.move(s,d)
     
     # mLibs Folder
     d = dest + "/mLibs"
@@ -471,7 +474,8 @@ def MoveModAPIContent(source,dest):
     # InstalledMods.config
     d = dest + "/InstalledMods.config"
     s = source + "/InstalledMods.config"
-    shutil.move(s,d)
+    if os.path.exists(s):
+        shutil.move(s,d)
 
 # Old Script for switching between instances. Unreferenced.
 # Used Copy/Delete a bunch instead of a move function.
@@ -704,7 +708,7 @@ def WipeFolder(bdir):
 def CopySData(s,d):
     #if not os.path.exists(d):
         if os.path.exists(s): 
-            shutil.copytree(s, d, dirs_exist_ok=True, ignore=shutil.ignore_patterns("Config","Spore_Audio1.package", "Spore_Audio2.package", "Spore_Content.package", "Spore_Game.package", "Spore_Graphics.package", "Spore_Pack_03.package", "Locale", "version.txt", "properties.txt"))
+            shutil.copytree(s, d, dirs_exist_ok=True, ignore=shutil.ignore_patterns("PatchData.package","Config","Spore_Audio1.package", "Spore_Audio2.package", "Spore_Content.package", "Spore_Game.package", "Spore_Graphics.package", "Spore_Pack_03.package", "Locale", "version.txt", "properties.txt"))
         else:
             print(color_red+"Invalid Path.")
     #else:
@@ -725,7 +729,8 @@ def DelSData(wdir):
                 or i == "Locale"
                 or i == "version.txt"
                 or i == "properties.txt"
-                or i == "Config"):
+                or i == "Config"
+                or i == "PatchData.package"):
             # Check if this is a directory or a file
             if (os.path.isfile(wdir + '/' + i)):
                 # Delete code for a file

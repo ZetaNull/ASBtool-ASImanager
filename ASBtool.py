@@ -14,7 +14,7 @@ def Main():
     
     # Text Preamble thing
     print("------------------------------------------------------------------------")
-    print("Welcome to the Abysmal Spore Backup tool. (0.1.1) - Save Folder Rework \nThis probably sucks, but oh well. I'm just going for functional here.")
+    print("Welcome to the Abysmal Spore Backup tool. (0.1.2) - GOG Update \nThis probably sucks, but oh well. I'm just going for functional here.")
     print("------------------------------------------------------------------------\n")
     print("This program will back up some files in your current spore installation that \nshould allow you to restore your saves and mods if needed.\n")
     print("Can theoretically be used to manually switch between different sets of mods, \nthough I do not reccomend this.\n")
@@ -160,7 +160,7 @@ def CopyBackup(s,d):
 def CopySData(s,d):
     if not os.path.exists(d):
         if os.path.exists(s): 
-            shutil.copytree(s, d,ignore=shutil.ignore_patterns("Spore_Audio1.package", "Spore_Audio2.package", "Spore_Content.package", "Spore_Game.package", "Spore_Graphics.package", "Spore_Pack_03.package", "Locale", "version.txt", "properties.txt"))
+            shutil.copytree(s, d,ignore=shutil.ignore_patterns("PatchData.package","Config","Spore_Audio1.package", "Spore_Audio2.package", "Spore_Content.package", "Spore_Game.package", "Spore_Graphics.package", "Spore_Pack_03.package", "Locale", "version.txt", "properties.txt"))
         else:
             print("Invalid Path.")
     else:
@@ -170,7 +170,7 @@ def CopySData(s,d):
 def CopyGAData(s,d):
     if not os.path.exists(d):
         if os.path.exists(s): 
-            shutil.copytree(s, d,ignore=shutil.ignore_patterns("Spore_EP1_Locale_01.package", "Spore_EP1_Locale_02.package", "Spore_EP1_Content_01.package", "Spore_EP1_Content_02.package", "version.txt", "properties.txt", "Spore_EP1_Data.package"))
+            shutil.copytree(s, d,ignore=shutil.ignore_patterns("Config","Spore_EP1_Locale_01.package", "Spore_EP1_Locale_02.package", "Spore_EP1_Content_01.package", "Spore_EP1_Content_02.package", "version.txt", "properties.txt", "Spore_EP1_Data.package"))
         else:
             print("Invalid Path.")
     else:
