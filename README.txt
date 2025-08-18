@@ -28,10 +28,14 @@ a new backup using a cleaner instance. This will then be used as the base instan
 - I'm unsure how leaving save folders empty would impact an instance when you try and switch to it, so probably don't do this? Just make sure to run Spore after deleting anything. It /should/ be fine. I still recommend keeping a backup somewhere though on the off chance you forget or something goes wrong.
 
 [INSTANCE MANAGER CHANGELOG:]
+
+
 0.1.2 - Instance Swap Rework
 - Reworked the way that Instances are swapped away from a copy/delete method to a proper move method
 - Significantly faster Instance swapping than 0.1.1
 - Incompatible with 0.1.1 instances without minor tweaks
+0.1.2_1 - HOTFIX 1
+- Fixed an incorrect implementation of part of the mod API file swapping function that buried some folders recursively as you switch instances
 
 0.1.1 - Save Folder Rework
 - Fixed the Instance Manager by reworking it to be placed INSIDE of the Spore save directory.

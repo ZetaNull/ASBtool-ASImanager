@@ -29,7 +29,7 @@ def Main():
     print(cwd)
     # Welcome blurb
     print(color_blue + "------------------------------------------------------------------------")
-    print(color_green + "Welcome to the Abysmal Spore Instance Manager. \n(0.1.2) - Instance Swap Rework\n"
+    print(color_green + "Welcome to the Abysmal Spore Instance Manager. \n(0.1.2_1) - Instance Swap Rework (Hotfix 1)\n"
           + "Sorry this probably sucks, I don't have the budget for a GUI."
           + "\n\nPlease make sure to run as administrator to ensure files can be"
           + "\nmoved properly! This can be done by running Run Instance Manager.bat \n"
@@ -87,7 +87,7 @@ def Main():
                 print(color_blue+"\n------------------------------------------------------------------------")
                 print(color_green+"Welcome to the Abysmal Spore Instance Manager. Please read the\n"
                       + "README.txt file to make sure that you set everything up correctly.\n"
-                      + "(0.1.2) - Instance Swap Rework\n"
+                      + "(0.1.2_1) - Instance Swap Rework (Hotfix 1)\n"
                       + color_blue+"------------------------------------------------------------------------"
                       + color_active+"\n\n  This is a mod instance manager I created for Spore because I \n"
                       + "needed one and nobody seemed to have made one prior to this.\n\n"
@@ -433,7 +433,7 @@ def MoveModAPIContent(source,dest):
     except FileExistsError:
         pass
     # ModSettings Folder
-    d = dest + "/ModSettings"
+    d = dest #+ "/ModSettings"
     s = source + "/ModSettings"
     try:
         os.mkdir(d)
@@ -442,7 +442,7 @@ def MoveModAPIContent(source,dest):
     shutil.move(s,d)
     
     # ModConfigs Folder
-    d = dest + "/ModConfigs"
+    d = dest #+ "/ModConfigs"
     s = source + "/ModConfigs"
     try:
         os.mkdir(d)
