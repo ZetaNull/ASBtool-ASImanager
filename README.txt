@@ -1,5 +1,5 @@
 !!PLEASE EXTRACT THESE FILES INTO YOUR SPORE SAVE DIRECTORY IN ROAMING!!
-These scripts are hardcoded to only function properly when placed INSIDE of the Spore folder in %Appdata%/Roaming, as it had issues when it was set to be used elsewhere. 
+These scripts are hardcoded to only function properly when placed INSIDE of the Spore save folder in %Appdata%/Roaming, as it had issues when it was set to be used elsewhere. 
 Please do not place them inside of a folder IN the Spore folder, place them directly in the Spore folder itself.
 
 Use this at your own risk. If this damages your Spore files, I can't do much about it. Please be careful with this.
