@@ -17,10 +17,17 @@ I would recommend not using this without being clear on where your spore files a
 0. Backup your Spore files before using this, just to be safe if something goes wrong.
 1. Place the files in the zip INSIDE of the Spore Save directory. (Directly inside, not in a subfolder.) Originally the zip was meant to be able to be extracted anywhere, but I was having bizzare issues getting that to work. This is usually in Appdata/Roaming on windows.
 2. Run Setup.bat or Setup.py to generate .bat files for ASBtool.py and ASImanager.py ("`Run ASBtool.bat`" and "`Run Instance Manager.bat`" respectively)
-4. Generate a partial backup of your Spore files using `Run ASBtool.bat` (Example of which directories you need to use for this below, though it may not apply outside of the EA App.)
+4. Generate a partial backup of your Spore files using `Run ASBtool.bat` (Examples of which directories you need to use for this below for EA App and GOG Spore)
 5. Run `Run Instance Manager.bat` as administrator to run the Instance Manager. It does not work properly if you don't.
 
 At this point, you can just continue to run the instance manager through the .bat file, though I would recommend setting up a shortcut that runs it as administrator by default for ease of use.
 
-## Spore Directories Example
+## Spore Directories Examples
+EA App:
+
 <img width="515" height="99" alt="image" src="https://github.com/user-attachments/assets/78a0f3bf-eb1b-4011-ae9e-aa46e6c5c66c" />
+
+GOG Spore:
+
+<img width="476" height="95" alt="image" src="https://github.com/user-attachments/assets/43cf1032-e8fe-4c7e-8bdc-e3fb5122b88c" />
+
